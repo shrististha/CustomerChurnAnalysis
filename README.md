@@ -1,58 +1,93 @@
-# Customer Churn Analysis
+# Customer Churn Data Analysis
 
 ## Table of Contents
-* [Project Overview](#project-overview)
-* [Datasets](#datasets)
-* [Tools & Technologies](#tools--technologies)
-* [Screenshots](#screenshots)
-* [Key Findings & Insights](#key-findings--insights)
-* [Setup](#setup)
-* [Project Structure](#project-structure)
-* [Contact](#contact)
+1.  [Project Overview](#project-overview)
+2.  [Dataset](#dataset)
+3.  [Tools & Technologies](#tools--technologies)
+4.  [Data Cleaning & Preprocessing Methodology](#data-cleaning--preprocessing-methodology)
+5.  [Screenshots](#screenshots)
+6.  [Key Findings](#key-findings)
+7.  [Setup & Usage](#setup--usage)
+8.  [Project Structure](#project-structure)
+9.  [Contact](#contact)
 
 ## Project Overview
-This project demonstrates the essential steps of data cleaning, preprocessing, and exploratory data analysis on a Telecom Customer Churn dataset. The primary goal is to transform raw, and often messy, data into a clean, well-structured, and reliable format suitable for advanced analytics, visualization, and machine learning modeling. The process involves handling missing values, correcting data types, standardizing categorical features, and ensuring data integrity.
 
-## Datasets
-This project utilizes the following dataset:
 
-**Customer Churn Dataset (CustomerChurnDataset.xlsx):** Contains customer data for a telecom company, including services subscribed to, tenure, charges, and churn status. This dataset suffered from incorrect data types, inconsistent categorical values, and missing information that required imputation.
+## Dataset
+-   **Source File**: `CustomerChurnDataset.xlsx`
+-   **Total Records**: 7,043 customer entries
+-   **Total Features**: 23 columns
+-   **Key Fields**:
+    *   `customerID`: Unique identifier for each customer.
+    *   **Demographics**: `gender`, `SeniorCitizen`, `Partner`, `Dependents`.
+    *   **Account Information**: `tenure`, `Contract`, `PaymentMethod`, `PaperlessBilling`, `MonthlyCharges`, `TotalCharges`.
+    *   **Subscribed Services**: `PhoneService`, `MultipleLines`, `InternetService`, `OnlineSecurity`, `OnlineBackup`, `DeviceProtection`, `TechSupport`, `StreamingTV`, `StreamingMovies`.
+    *   **Support History**: `numAdminTickets`, `numTechTickets`.
+    *   **Target Variable**: `Churn` (Yes/No).
 
 ## Tools & Technologies
-The analysis was conducted using Python and the following libraries:
-*   **pandas:** For data loading, manipulation, and analysis.
-*   **NumPy:** For numerical operations and handling missing `NaN` values.
-*   **Matplotlib:** For data visualization.
-*   **Jupyter Notebook:** As the interactive environment for coding and analysis.
+The entire data cleaning and preparation process was conducted within a Python environment, leveraging the following tools:
+
+-   **Data Manipulation & Cleaning**: Python 3.12 (with pandas and NumPy libraries)
+-   **Development Environment**: Jupyter Notebook
+
+![Python Logo](https://img.icons8.com/color/120/python--v1.png)![Jupyter Logo](https://img.icons8.com/?size=100&id=J0SgMWzAxqFj&format=png&color=000000)
+
+## Data Cleaning & Preprocessing Methodology
+The raw dataset was refined through a series of systematic steps to ensure its quality and consistency:
+
+1.  **Initial Assessment & Data Profiling**
+    *   The dataset was loaded and inspected using `df.info()` and `df.head()` to understand its structure, data types, and identify immediate issues.
+    *   The `TotalCharges` column was identified as an `object` type instead of numeric, indicating the presence of non-numeric values.
+
+2.  **Handling Missing and Incorrect Values in `TotalCharges`**
+    *   The `TotalCharges` column was converted to a numeric type using `pd.to_numeric` with `errors='coerce'`. This process revealed 11 entries that were originally empty strings, which were converted to `NaN` (Not a Number).
+    *   These missing values were logically imputed by calculating `tenure * MonthlyCharges`. This approach assumes that customers with a tenure of 0 months had not yet accrued any total charges, providing a sensible estimate.
+
+3.  **Standardizing Categorical Features**
+    *   Several service-related columns (e.g., `MultipleLines`, `OnlineSecurity`, `OnlineBackup`) contained inconsistent values like "No phone service" or "No internet service" in addition to "No."
+    *   To ensure consistency, these redundant categories were replaced with a standard "No", creating clean, binary "Yes/No" features suitable for analysis and modeling.
+
+4.  **Enhancing Data Readability**
+    *   The `SeniorCitizen` column, originally encoded as `0` and `1`, was mapped to more intuitive string values: "No" and "Yes". This improves the interpretability of the data for business stakeholders and analysts.
+
+5.  **Final Output**
+    *   The fully cleaned and processed DataFrame was exported to a new file, `CustomerChurnCleanDataset.xlsx`, creating a pristine dataset ready for downstream analytical tasks.
 
 ## Screenshots
 
+## Key Findings
 
-## Key Findings & Insights
+## Setup & Usage
+To replicate the data cleaning process on your local machine, please follow these steps:
 
-## Setup
-To run this project locally, follow these steps:
-
-1.  **Clone the repository (if applicable) or download the files.**
-
-2.  **Install the required Python libraries.** It is recommended to use a virtual environment.
+1.  **Clone the Repository**
     ```bash
-    pip install pandas numpy matplotlib
+    git clone https://github.com/shristi-stha/CustomerChurnAnalysis.git
+    cd CustomerChurnAnalysis
     ```
-3.  **Place the datasets in the root directory.**
-    *   `CustomerChurnDataset.xlsx`
+2.  **Set Up a Python Virtual Environment**
+    ```bash
+    # For macOS/Linux
+    python3 -m venv env
+    source env/bin/activate
 
-4.  **Run the Jupyter Notebooks.**
-    *   `CustomerChurnAnalysis.ipynb`
+    # For Windows
+    python -m venv env
+    .\env\Scripts\activate
+    ```
+3.  **Run the Cleaning Notebook**
+    Open and execute the cells in the `Customer_Churn.ipynb` notebook. This will use the raw `CustomerChurnDataset.xlsx` as input and generate the cleaned `CustomerChurnCleanDataset.xlsx` file.
 
 ## Project Structure
-The project is organized as follows:
 ```
-.
-├── CustomerChurnAnalysis.ipynb         # Notebook for cleaning the churn dataset
-├── CustomerChurnDataset.xlsx           # Raw churn data
-├── CustomerChurnCleanDataset.xlsx      # Cleaned churn data output
-└── README.md                           # This file
+CustomerChurnAnalysis/
+│
+├── Customer_Churn.ipynb.ipynb             # Jupyter Notebook with the Python code for cleaning.
+├── CustomerChurnDataset.xlsx       # The original, raw dataset.
+├── CustomerChurnCleanDataset.xlsx  # The final, cleaned dataset (output).
+└── README.md                       # This project documentation file.
 ```
 
 ## Contact
