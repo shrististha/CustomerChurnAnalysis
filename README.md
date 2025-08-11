@@ -1,5 +1,7 @@
 # Customer Churn Data Analysis
 
+Public Tableau Interactive Dashboard is available at this [link](https://public.tableau.com/app/profile/shristi.shrestha2022/viz/CustomerChurnAnalysisDashboard_17530394841520/OverviewDashboard).
+
 ## Table of Contents
 1.  [Project Overview](#project-overview)
 2.  [Dataset](#dataset)
